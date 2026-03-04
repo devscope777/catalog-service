@@ -1,0 +1,18 @@
+name: CI Pipeline
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "maven"
+      - name: Compile and test application
+        run: mvn --batch-mode --update-snapshots verify
