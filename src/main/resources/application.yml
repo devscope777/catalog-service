@@ -1,6 +1,9 @@
 spring:
   application:
     name: catalog-service
+  profiles:
+    active: test-data
+
 server:
   port: 9001
   tomcat:

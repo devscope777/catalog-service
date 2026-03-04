@@ -12,7 +12,7 @@ import static org.mockito.BDDMockito.given;
 import com.example.catalog_service.exception.BookNotFoundException;
 import com.example.catalog_service.service.BookService;
 
-@WebMvcTest
+@WebMvcTest(BookController.class)
 public class BookControllerTests {
     @Autowired
     private MockMvc mvc;
