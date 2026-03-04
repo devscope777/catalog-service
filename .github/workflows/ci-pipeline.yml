@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .catalog-service
+        working-directory: ./catalog-service
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
