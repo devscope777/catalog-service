@@ -24,7 +24,7 @@ public class BookValidationTest {
     @Test
     @DisplayName("Test validation success when all fields are correct")
     void whenAllFieldsCorrectThenValidationSucceeds() {
-        var book = new Book("1234567890", "Title", "Author", 9.90);
+        var book = Book.build("1234567890", "Title", "Author", 9.90);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).isEmpty();
     }
@@ -32,7 +32,7 @@ public class BookValidationTest {
     @Test
     @DisplayName("Test when isbn is defined but incorrect fails validation")
     void whenIsbnDefinedButIncorrectThenValidationFails() {
-        var book = new Book("12345fdsf678932320", "Title", "Author", 9.90);
+        var book = Book.build("12345fdsf678932320", "Title", "Author", 9.90);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         String expectedMessage = "The ISBN format must follow the standards ISBN-10 or ISBN-13.";
         assertThat(violations).hasSize(1);
