@@ -20,10 +20,10 @@ public record Book(
                 @NotNull(message = "{spring.book.price.notblank}") @Positive(message = "{spring.book.price.format}") Double price,
                 @CreatedDate Instant createdDate,
                 @LastModifiedDate Instant lastModifiedDate,
-                @Version int version) {
+                @Version Integer version) {
 
         public static Book build(String isbn, String title, String author, Double price) {
-                return new Book(null, isbn, title, author, price, null, null, 0);
+                return new Book(null, isbn, title, author, price, null, null, null);
         }
 
 }
