@@ -6,6 +6,8 @@ COPY ${JAR_FILE} catalog-service.jar
 RUN java -Djarmode=tools -jar catalog-service.jar extract --layers --destination extracted
 
 FROM eclipse-temurin:17
+RUN useradd spring
+USER spring
 WORKDIR /application
 
 COPY --from=builder /builder/extracted/dependencies/ ./
