@@ -2,7 +2,7 @@ spring:
   application:
     name: catalog-service
   profiles:
-    active: integration
+    active: test-data
   config:
     import: "optional:configserver:"
   cloud:

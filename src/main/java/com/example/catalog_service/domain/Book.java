@@ -18,12 +18,13 @@ public record Book(
                 @NotBlank(message = "{spring.book.title.notblank}") String title,
                 @NotBlank(message = "{spring.book.author.notblank}") String author,
                 @NotNull(message = "{spring.book.price.notblank}") @Positive(message = "{spring.book.price.format}") Double price,
+                String publisher,
                 @CreatedDate Instant createdDate,
                 @LastModifiedDate Instant lastModifiedDate,
                 @Version Integer version) {
 
-        public static Book build(String isbn, String title, String author, Double price) {
-                return new Book(null, isbn, title, author, price, null, null, null);
+        public static Book build(String isbn, String title, String author, Double price, String publisher) {
+                return new Book(null, isbn, title, author, price, publisher, null, null, null);
         }
 
 }
