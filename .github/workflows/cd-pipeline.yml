@@ -1,0 +1,42 @@
+name: CD Pipeline
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - name: Compile and test application
+        run: mvn --batch-mode  --update-snapshots verify
+
+  package:
+    name: package
+    needs: [build]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - name: Containerize and publish image
+        run: |
+          .chmod +x mvnw
+          ./mvnw spring-boot:build-image
+          -DregistryUsername=${{ secrets.REGISTRY_USERNAME }}
+          -Ddocker.publishRegistry.username=${{ secrets.REGISTRY_USERNAME }}
+          -Ddocker.publishRegistry.password=${{ secrets.REGISTRY_TOKEN }}
+          -Ddocker.publishRegistry.url=${{ secrets.REGISTRY_URL }}
