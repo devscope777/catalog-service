@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -17,7 +18,7 @@ jobs:
           java-version: 17
           cache: maven
       - name: Compile and test application
-        run: mvn --batch-mode  --update-snapshots verify
+        run: mvn --batch-mode --update-snapshots verify
 
   package:
     name: package
@@ -36,6 +37,9 @@ jobs:
         run: |
           .chmod +x mvnw
           ./mvnw spring-boot:build-image
+          -DskipTests
+          -Dspring.cloud.config.enabled=false
+          -Dspring.config.import=
           -DregistryUsername=${{ secrets.REGISTRY_USERNAME }}
           -Ddocker.publishRegistry.username=${{ secrets.REGISTRY_USERNAME }}
           -Ddocker.publishRegistry.password=${{ secrets.REGISTRY_TOKEN }}
