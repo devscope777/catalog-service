@@ -14,4 +14,4 @@ jobs:
           java-version: "17"
           cache: "maven"
       - name: Compile and test application
-        run: mvn --batch-mode --update-snapshots verify -Dspring.profiles.active=integration
+        run: mvn --batch-mode --update-snapshots verify
