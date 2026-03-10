@@ -36,7 +36,7 @@ jobs:
         run: |
           chmod +x mvnw
           ./mvnw spring-boot:build-image
-          -DregistryUsername=${{ secrets.REGISTRY_USERNAME }}
+          -Dspring-boot.build-image.imageName=${{ secrets.REGISTRY_USERNAME }}
           -Ddocker.publishRegistry.username=${{ secrets.REGISTRY_USERNAME }}
           -Ddocker.publishRegistry.password=${{ secrets.REGISTRY_TOKEN }}
           -Ddocker.publishRegistry.url=${{ secrets.REGISTRY_URL }}
