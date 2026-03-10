@@ -33,10 +33,10 @@ jobs:
           java-version: 17
           cache: maven
       - name: Containerize and publish image
-        run: |
-          chmod +x mvnw
-          ./mvnw spring-boot:build-image \ 
-          -DregisterUsername=${{ secrets.REGISTRY_USERNAME }} \
-          -Ddocker.publishRegistry.username=${{ secrets.REGISTRY_USERNAME }} \
-          -Ddocker.publishRegistry.password=${{ secrets.REGISTRY_TOKEN }} \
+        run: >
+          chmod +x mvnw &&
+          ./mvnw spring-boot:build-image
+          -DregisterUsername=${{ secrets.REGISTRY_USERNAME }}
+          -Ddocker.publishRegistry.username=${{ secrets.REGISTRY_USERNAME }}
+          -Ddocker.publishRegistry.password=${{ secrets.REGISTRY_TOKEN }}
           -Ddocker.publishRegistry.url=${{ secrets.REGISTRY_URL }}
