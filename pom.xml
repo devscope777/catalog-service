@@ -96,7 +96,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>${registryUsername}/${project.name}:${project.version}</name>
+						<name>${spring-boot.build-image.imageName}/${project.name}:${project.version}</name>
 						<publish>true</publish>
 						<env>
 							<BP_JVM_VERSION>17</BP_JVM_VERSION>
