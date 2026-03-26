@@ -10,10 +10,11 @@ import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.example.catalog_service.config.DataConfig;
 import com.example.catalog_service.repository.BookRepository;
-import com.example.catalog_service.repository.DataConfig;
 
 @DataJdbcTest
 @Import(DataConfig.class)
@@ -30,7 +31,7 @@ public class BookRepositoryJdbcTests {
     @Test
     public void findBookByIsbnWhenExisting() {
         var bookIsbn = "1234567895";
-        var book = new Book(null, bookIsbn, "Title", "Author", 12.90, null, null, null, null);
+        var book = new Book(null, bookIsbn, "Title", "Author", 12.90, null, null, null, null, null, null);
         var expectedBook = jdbcAggregateTemplate.insert(book);
 
         Optional<Book> actualBook = bookRepository.findByIsbn(bookIsbn);
@@ -41,6 +42,25 @@ public class BookRepositoryJdbcTests {
                 .ignoringFields("createdDate", "lastModifiedDate")
                 .isEqualTo(expectedBook);
 
+    }
+
+    @Test
+    void whenCreateBookNotAuthenticatedThenNoAuditMetadata() {
+        var bookToCreate = Book.build("1232343456", "Title", "Author", 12.90, "Polarsophia");
+        var createdBook = bookRepository.save(bookToCreate);
+
+        assertThat(createdBook.createdBy()).isNull();
+        assertThat(createdBook.lastModifiedBy()).isNull();
+    }
+
+    @Test
+    @WithMockUser("john")
+    void whenCreateBookAuthenticatedThenAuditMetadata() {
+        var bookToCreate = Book.build("1232343457", "Title", "Author", 12.90, "Polarsophia");
+        var createdBook = bookRepository.save(bookToCreate);
+
+        assertThat(createdBook.createdBy()).isEqualTo("john");
+        assertThat(createdBook.lastModifiedBy()).isEqualTo("john");
     }
 
 }
