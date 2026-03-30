@@ -37,6 +37,7 @@ public class CatalogServiceApplicationTests {
 	private static KeycloakToken bjornTokens;
 	private static KeycloakToken isabelleTokens;
 
+	@SuppressWarnings("resource")
 	@Container
 	private static final KeycloakContainer keycloakContainer = new KeycloakContainer("quay.io/keycloak/keycloak:latest")
 			.withRealmImportFile("keycloak_config.json");
