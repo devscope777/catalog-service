@@ -44,11 +44,15 @@ spring:
           issuer-uri: ${KEYCLOAK_URL:http://localhost:8080}/realms/PolarBookshop
 
 management:
+  endpoint:
+    health:
+      show-details: never
   endpoints:
     web:
       exposure:
         include:
           - refresh
+          - health
 server:
   port: 9001
   shutdown: graceful

@@ -111,9 +111,21 @@ public class CatalogServiceApplicationTests {
 				.exchange().expectStatus().isUnauthorized();
 	}
 
+	@Test
+	void whenActuatorIsReachedReturnAppStatus() {
+		var status = new Status("UP");
+		webTestClient.get().uri("/actuator/health")
+				.exchange().expectStatus().isOk()
+				.expectBody().jsonPath("$.status").isEqualTo(status.status());
+	}
+
 	@AfterAll
 	static void cleanup() {
 		keycloakContainer.close();
 	}
+
+}
+
+record Status(String status) {
 
 }
