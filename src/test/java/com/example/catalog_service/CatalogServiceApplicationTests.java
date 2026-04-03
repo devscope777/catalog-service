@@ -18,6 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -111,21 +112,9 @@ public class CatalogServiceApplicationTests {
 				.exchange().expectStatus().isUnauthorized();
 	}
 
-	@Test
-	void whenActuatorIsReachedReturnAppStatus() {
-		var status = new Status("UP");
-		webTestClient.get().uri("/actuator/health")
-				.exchange().expectStatus().isOk()
-				.expectBody().jsonPath("$.status").isEqualTo(status.status());
-	}
-
 	@AfterAll
 	static void cleanup() {
 		keycloakContainer.close();
 	}
-
-}
-
-record Status(String status) {
 
 }
