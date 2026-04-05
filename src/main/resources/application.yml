@@ -46,13 +46,21 @@ spring:
 management:
   endpoint:
     health:
-      show-details: never
+      show-details: always
+      show-component: always
+      probes:
+        enabled: true
   endpoints:
     web:
       exposure:
         include:
           - refresh
           - health
+          - prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
 server:
   port: 9001
   shutdown: graceful

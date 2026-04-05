@@ -114,12 +114,19 @@
 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
+				
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>

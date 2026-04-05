@@ -17,6 +17,18 @@ spec:
       containers:
         - name: catalog-service
           image: devscope777/catalog-service:0.0.1-SNAPSHOT
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9001
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProde:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 9001
+            initialDelaySeconds: 5
+            periodSeconds: 15
           imagePullPolicy: Always
           lifecycle:
             preStop:
